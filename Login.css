@@ -1,0 +1,39 @@
+.container {
+    position: relative;
+    border: 1px solid blue;
+    padding: 50px;
+    background: blue;
+    width: 340px;
+    height: 380px;
+    border-radius: 8px;
+    margin: 50px auto;
+    margin-left: 620px;
+}
+
+.phrase {
+    position: absolute;
+    top: 44%; 
+    left: 62%; 
+    transform: translate(-50%, -50%);
+    font-size: 17px;
+    color: white;
+}
+
+.word {
+    position: absolute;
+    top: 38%; 
+    left: 62%; 
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: white;
+}
+
+.btn-primary {
+    background-color: blue;
+    border-color: white;
+    color:white;
+    margin-left: 760px;
+    width: 150px;
+    padding: 12px;
+    transform: translateY(-240px);
+}
