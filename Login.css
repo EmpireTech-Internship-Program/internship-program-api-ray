@@ -149,3 +149,21 @@ body {
     transform: translateY(-687px);
     margin-left: 265px;
 }
+
+.btn-second {
+    background-color: blue;
+    border-color: white;
+    color:white;
+    margin-left: 340px;
+    width: 150px;
+    padding: 12px;
+    transform: translateY(-680px);
+    border-radius: 8px;
+}
+
+.line {
+    width: 118px;
+    border: 1px solid #000; 
+    transform: translateY(-635px) ;
+    margin-left: 470px;
+}
