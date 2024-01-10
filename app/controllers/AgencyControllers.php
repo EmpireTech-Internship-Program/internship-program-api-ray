@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['username'] = $newUsername;
 
         // Uso de constante para a URL de redirecionamento
-        define('REDIRECT_URL', 'listing.html');
+        define('REDIRECT_URL', 'listing-agency.html');
 
         // Redireciona de volta para a página do usuário
         header('Location: ' . REDIRECT_URL);
