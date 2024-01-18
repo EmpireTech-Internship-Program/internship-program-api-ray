@@ -1,6 +1,6 @@
 <?php
 
-class LoginController {
+class UserController {
 
     private $service;
 
@@ -11,28 +11,27 @@ class LoginController {
     public function login($username, $password) {
         $user = $this->service->getUserByUsername($username);
 
-        if($user && password_verify($password, $user->getPassword())) {
-        header("Location: ../Banks/listing-banks/listing.html");
-        exit();
+        if ($user && password_verify($password, $user->getPassword())) {
+            header("Location: ../Banks/listing-banks/listing.html");
+            exit();
+        }
     }
-}
-        
+
     public function signup($username, $password) {
         $newUser = new User();
         $newUser->setUsername($username); 
-        $newUser->setpassword($password);
+        $newUser->setPassword($password);
         
         $success = $this->service->createUser($newUser);
- 
-        if($success) {
-         header("Location: ../Banks/listing-banks/listing.html");
-         exit();
+
+        if ($success) {
+            header("Location: ../Banks/listing-banks/listing.html");
+            exit();
         } 
     }
 
-   function logout() {
-    header("Location: ../../login/login.html");
-    exit();    
-}
-
+    function logout() {
+        header("Location: ../../login/login.html");
+        exit();    
+    }
 }

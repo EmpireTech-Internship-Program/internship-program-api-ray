@@ -7,7 +7,7 @@ class User {
 
     function __construct($username, $password) {
         $this->username = $username;
-        $this->userpassword = $this->hashPassword($password);
+        $this->password = $this->hashPassword($password);
     }
 
     public function getUsername() {
@@ -18,11 +18,11 @@ class User {
         $this->username = $username;
     }
 
-    public function getPassword() {
+    private function getPassword() {
         return $this->password;
     }
 
-    public function setPassword($password) {
+    protected function setPassword($password) {
         $this->password = $this->hashPassword($password);
     }
 
