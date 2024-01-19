@@ -5,9 +5,9 @@ class User {
     private $username;
     private $password;
 
-    function __construct($username, $password) {
+    public function __construct($username, $password) {
         $this->username = $username;
-        $this->password = $this->hashPassword($password);
+        $this->setPassword($password); 
     }
 
     public function getUsername() {
@@ -18,15 +18,11 @@ class User {
         $this->username = $username;
     }
 
-    private function getPassword() {
+    public function getPassword() {
         return $this->password;
     }
 
-    protected function setPassword($password) {
-        $this->password = $this->hashPassword($password);
-    }
-
-    private function hashPassword($password) {
-        return password_hash($password, PASSWORD_DEFAULT);
+    public function setPassword($password) {
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 }
