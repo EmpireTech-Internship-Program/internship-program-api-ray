@@ -1,13 +1,18 @@
 <?php
 
 class User {
-
+    private $id;
     private $username;
     private $password;
 
-    public function __construct($username, $password) {
+    public function __construct($id, $username, $password) {
+        $this->id = $id;
         $this->username = $username;
-        $this->setPassword($password); 
+        $this->password = $password;
+    }
+
+    public function getId() {
+        return $this->id;
     }
 
     public function getUsername() {
@@ -23,6 +28,6 @@ class User {
     }
 
     public function setPassword($password) {
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $this->password = $password;
     }
 }

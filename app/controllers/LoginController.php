@@ -1,37 +1,22 @@
 <?php
 
-class UserController {
+class LoginController {
 
-    private $service;
+    private $userService;
 
-    public function __construct(UserService $userService) {
-        $this->service = $userService;
+    public function __construct($userService) {
+        $this->userService = $userService;
     }
 
     public function login($username, $password) {
-        $user = $this->service->getUserByUsername($username);
-
-        if ($user && password_verify($password, $user->getPassword())) {
-            header("Location: ../Banks/listing-banks/listing.html");
-            exit();
-        }
+        return $this->userService->authenticateUser($username, $password);
     }
 
     public function signup($username, $password) {
-        $newUser = new User();
-        $newUser->setUsername($username); 
-        $newUser->setPassword($password);
-        
-        $success = $this->service->createUser($newUser);
-
-        if ($success) {
-            header("Location: ../Banks/listing-banks/listing.html");
-            exit();
-        } 
+        return $this->userService->createUser($username, $password);
     }
 
-    function logout() {
-        header("Location: ../../login/login.html");
-        exit();    
+    public function logout() {
+        return "Logout bem-sucedido.";
     }
 }

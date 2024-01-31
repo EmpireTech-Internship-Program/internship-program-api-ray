@@ -2,52 +2,38 @@
 
 class UserRepository {
 
-    private $model;
-    private $pdo;
+    private $conn;
 
-    public function __construct(User $model, PDO $pdo) {
-        $this->model = $model;
-        $this->pdo = $pdo;
+    public function __construct($conn) {
+        $this->conn = $conn;
     }
 
     public function getAll() {
-        $stmt = $this->pdo->prepare("SELECT * FROM project.users");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_CLASS, get_class($this->model));
+        $sql = "SELECT * FROM users";
+        $result = $this->conn->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function get($id) {
-        $stmt = $this->pdo->prepare("SELECT * FROM project.users WHERE id = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchObject(get_class($this->model));
+    public function get($userId) {
+        $sql = "SELECT * FROM users WHERE id = $userId";
+        $result = $this->conn->query($sql);
+        return $result->fetch_assoc();
     }
 
-    public function create($data) {
-        $stmt = $this->pdo->prepare("INSERT INTO project.users (username, password) VALUES (:username, :password)");
-        $stmt->bindParam(':username', $data['username']);
-        $stmt->bindParam(':password', $data['password']);
-        return $stmt->execute();
+    public function create($username, $password) {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "INSERT INTO users (username, password) VALUES ('$username', '$hashedPassword')";
+        return $this->conn->query($sql);
     }
 
-    public function edit($data, $id) {
-        $stmt = $this->pdo->prepare("UPDATE project.users SET username = :username, password = :password WHERE id = :id");
-        $stmt->bindParam(':username', $data['username']);
-        $stmt->bindParam(':password', $data['password']);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        return $stmt->execute();
+    public function edit($userId, $username, $password) {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "UPDATE users SET username = '$username', password = '$hashedPassword' WHERE id = $userId";
+        return $this->conn->query($sql);
     }
 
-    public function delete($id) {
-        $stmt = $this->pdo->prepare("DELETE FROM project.users WHERE id = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        return $stmt->execute();
-    }
-
-    public function userExists($username) {
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM project.users WHERE username = :username");
-        $stmt->bindParam(':username', $username);
-        $stmt->execute();
-        return $stmt->fetchColumn() > 0;
+    public function delete($userId) {
+        $sql = "DELETE FROM users WHERE id = $userId";
+        return $this->conn->query($sql);
     }
 }

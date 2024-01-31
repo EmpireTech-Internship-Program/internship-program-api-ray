@@ -2,35 +2,43 @@
 
 class UserService {
 
-    private $repository;
+    private $userRepository;
 
-    public function __construct(UserRepository $userRepository) {
-        $this->repository = $userRepository;
+    public function __construct($userRepository) {
+        $this->userRepository = $userRepository;
     }
 
     public function getAll() {
-        return $this->repository->getAll();
+        return $this->userRepository->getAll();
     }
 
-    public function get($id) {
-        return $this->repository->get($id);
+    public function get($userId) {
+        return $this->userRepository->get($userId);
     }
 
-    public function create($data) {
-        return $this->repository->create([
-            'username' => $data['username'],
-            'password' => $data['password'],
-        ]);
+    public function create($username, $password) {
+        return $this->userRepository->create($username, $password);
     }
 
-    public function edit($data, $id) {
-        return $this->repository->edit([
-            'username' => $data['username'],
-            'password' => $data['password'],
-        ], $id);
+    public function edit($userId, $username, $password) {
+        return $this->userRepository->edit($userId, $username, $password);
     }
 
-    public function delete($id) {
-        return $this->repository->delete($id);
+    public function delete($userId) {
+        return $this->userRepository->delete($userId);
+    }
+
+    public function authenticateUser($username, $password) {
+        $user = $this->userRepository->getUserByUsername($username);
+
+        if ($user && password_verify($password, $user['password'])) {
+            return new User($user['id'], $user['username'], $user['password']);
+        } else {
+            return null;
+        }
+    }
+
+    public function createUser($username, $password) {
+        return $this->userRepository->createUser($username, $password);
     }
 }
