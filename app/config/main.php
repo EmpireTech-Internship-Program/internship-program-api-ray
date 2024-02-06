@@ -17,9 +17,8 @@ $conn = $database->getConnection();
 $tabelas = ['banks', 'agency', 'account', 'people'];
 
 foreach ($tabelas as $tabela) {
-    $sql = "CREATE TABLE IF NOT EXISTS $tabela (
-        // Defina aqui os campos da tabela e suas configurações
-    )";
+    $sql = "CREATE TABLE IF NOT EXISTS $tabela 
+        id INT AUTO_INCREMENT PRIMARY KEY";
 
     if ($conn->query($sql) === FALSE) {
         echo "Erro ao criar a tabela $tabela: " . $conn->error;
@@ -27,6 +26,7 @@ foreach ($tabelas as $tabela) {
         echo "Tabela $tabela criada ou já existe.";
     }
 }
+
 
 $userRepository = new UserRepository($conn);
 

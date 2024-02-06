@@ -17,13 +17,17 @@ class Database {
     }
 
     private function conectar() {
-        $this->conexao = new mysqli($this->host, $this->usuario, $this->senha, $this->bancoDeDados);
-
+        $this->conexao = new mysqli($this->host, $this->usuario, $this->senha);
+    
         if ($this->conexao->connect_error) {
             die("Falha na conexão: " . $this->conexao->connect_error);
         }
+    
+        if (!$this->conexao->select_db($this->bancoDeDados)) {
+            die("Erro ao selecionar o banco de dados: " . $this->conexao->error);
+        }
     }
-
+    
     public function getConnection() {
         return $this->conexao;
     }
