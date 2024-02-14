@@ -43,3 +43,47 @@ class LoginController {
         return $token === 'seu_token_secreto';
     }
 }
+
+$loginController = new LoginController($userService);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if (isset($_GET['action'])) {
+        $action = $_GET['action'];
+
+        switch ($action) {
+            case 'login':
+    
+                $requestData = json_decode(file_get_contents('php://input'), true);
+                $username = $requestData['username'];
+                $password = $requestData['password'];
+                echo $loginController->login($username, $password);
+                break;
+            case 'signup':
+  
+                $requestData = json_decode(file_get_contents('php://input'), true);
+                $username = $requestData['username'];
+                $password = $requestData['password'];
+                echo $loginController->signup($username, $password);
+                break;
+            case 'logout':
+
+                echo $loginController->logout();
+                break;
+            case 'authorize':
+  
+                $token = $_POST['token'];
+                echo $loginController->authorize($token);
+                break;
+            default:
+
+                echo json_encode(['success' => false, 'message' => 'Ação inválida.']);
+                break;
+        }
+    } else {
+    
+        echo json_encode(['success' => false, 'message' => 'Nenhuma ação especificada.']);
+    }
+}
+
+?>
