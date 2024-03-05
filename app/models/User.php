@@ -1,33 +1,31 @@
 <?php
 
-class User {
-    private $id;
-    private $username;
-    private $password;
+namespace app\models;
 
-    public function __construct($id, $username, $password) {
-        $this->id = $id;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
+
+class User extends Model
+{
+    protected $fillable = ['username', 'password'];
+
+    public function setUsername($username)
+    {
         $this->username = $username;
-        $this->password = $password;
     }
 
-    public function getId() {
-        return $this->id;
-    }
-
-    public function getUsername() {
+    public function getUsername()
+    {
         return $this->username;
     }
 
-    public function setUsername($username) {
-        $this->username = $username;
+    public function setPassword($password)
+    {
+        $this->password = Hash::make($password);
     }
 
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
-    }
-
-    public function setPassword($password) {
-        $this->password = $password;
     }
 }

@@ -1,44 +1,41 @@
 <?php
 
-class UserService {
+namespace app\services;
 
-    private $userRepository;
+use App\Models\User;
+use App\Repositories\UserRepository;
 
-    public function __construct($userRepository) {
+class UserService
+{
+    protected $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
         $this->userRepository = $userRepository;
     }
 
-    public function getAll() {
+    public function getAll()
+    {
         return $this->userRepository->getAll();
     }
 
-    public function get($userId) {
-        return $this->userRepository->get($userId);
+    public function get($id)
+    {
+        return $this->userRepository->get($id);
     }
 
-    public function create($username, $password) {
-        return $this->userRepository->create($username, $password);
+    public function create(array $data)
+    {
+        return $this->userRepository->create($data);
     }
 
-    public function edit($userId, $username, $password) {
-        return $this->userRepository->edit($userId, $username, $password);
+    public function update($id, array $data)
+    {
+        return $this->userRepository->update($id, $data);
     }
 
-    public function delete($userId) {
-        return $this->userRepository->delete($userId);
-    }
-
-    public function authenticateUser($username, $password) {
-        $user = $this->userRepository->getUserByUsername($username);
-
-        if ($user && password_verify($password, $user['password'])) {
-            return new User($user['id'], $user['username'], $user['password']);
-        } else {
-            return null;
-        }
-    }
-
-    public function createUser($username, $password) {
-        return $this->userRepository->createUser($username, $password);
+    public function delete($id)
+    {
+        return $this->userRepository->delete($id);
     }
 }
